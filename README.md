@@ -32,3 +32,6 @@ TODO
 - Longitude -> number
 - create at -> dateTime
 - updated at -> dateTime
+
+
+This application was built with the use of https://www.youtube.com/watch?v=5pQsl9u_10M by Coding Garden
