@@ -27,8 +27,14 @@ const logEntrySchema = new Schema(
       required: true,
     },
     image: String,
+    visitedDate: {
+      required: true,
+      type: Date,
+    },
   },
   {
     timestamps: true,
   }
 );
+
+module.exports = logEntrySchema;
