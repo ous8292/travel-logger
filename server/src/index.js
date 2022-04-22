@@ -1,6 +1,12 @@
 //importing middleware
 const middlewares = require("./middlewares");
 
+//importing logs router
+const logs = require("./api/logs");
+
+//calling in enviroment variables
+require("dotenv").config();
+
 //creating basic express app
 const express = require("express");
 const app = express();
@@ -36,6 +42,10 @@ app.get("/", (req, res) => {
     message: "Hello World",
   });
 });
+
+//middleware -> using before notFound since we want it registered, but want it after all our middlewares
+//when a request comes in for this route, it will go into logs and see if any of the routes match
+app.use("/api/logs", logs);
 
 //not found middleware - creates not found error, sets 404 status code, then forwards to actual error handler
 app.use(middlewares.notFound);
