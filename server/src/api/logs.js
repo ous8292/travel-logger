@@ -11,4 +11,9 @@ router.get("/", (req, res) => {
   });
 });
 
+//creating post route
+router.post("/", (req, res) => {
+  console.log(req.body);
+});
+
 module.exports = router;
