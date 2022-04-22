@@ -16,15 +16,21 @@ app.use(helmet());
 //allows any origin to request from the backend
 const cors = require("cors");
 app.use(cors());
+
+//setting up DB connextion
+const mongoose = require("mongoose");
+mongoose.connect(process.env.DATABASE_URL, {
+  useNewUrlParser: true,
+});
+
 //enforces only requests originating from 3000 can access backend
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: process.env.CORS_ORIGIN,
   })
 );
 
 //setting up error with JSON
-
 app.get("/", (req, res) => {
   res.json({
     message: "Hello World",
