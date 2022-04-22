@@ -29,6 +29,10 @@ mongoose.connect(process.env.DATABASE_URL, {
   useNewUrlParser: true,
 });
 
+//for post request - body parse middleware
+//only adding json since that is what we are working with
+app.use(express.json());
+
 //enforces only requests originating from 3000 can access backend
 app.use(
   cors({
