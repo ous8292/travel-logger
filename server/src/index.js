@@ -1,35 +1,44 @@
-//importing middleware
-const middlewares = require("./middlewares");
-
-//importing logs router
-const logs = require("./api/logs");
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const helmet = require("helmet");
+const morgan = require("morgan");
 
 //calling in enviroment variables
 require("dotenv").config();
 
+//importing middleware
+const middlewares = require("./middlewares");
+//importing logs router
+const logs = require("./api/logs");
+
 //creating basic express app
-const express = require("express");
 const app = express();
 
 //creating logger
-const morgan = require("morgan");
 app.use(morgan("common"));
 
 //adds and removes headers in the application. (security reasons)
-const helmet = require("helmet");
 app.use(helmet());
 
 //allows any origin to request from the backend
-const cors = require("cors");
 app.use(cors());
 
-//setting up DB connextion
-const mongoose = require("mongoose");
-mongoose.connect(process.env.DATABASE_URL, {
-  useNewUrlParser: true,
-});
+console.log(process.env.DATABASE_URL);
 
-//for post request - body parse middleware
+//setting up DB connextion
+mongoose
+  .connect(process.env.DATABASE_URL, {
+    useNewUrlParser: true,
+  })
+  .then(() => {
+    console.log("MongoDB Connected");
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+
+//for post request - body parser middleware
 //only adding json since that is what we are working with
 app.use(express.json());
 

@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
+
 const { Schema } = mongoose;
 
 //making a variable to hold required object -> makes it more reusable
