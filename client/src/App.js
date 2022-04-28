@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 // import ReactMapGL from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { listLogEntries } from "./API";
+import { Marker } from "react-map-gl";
 
 // const App = () => {
 //   const [viewport, setViewport] = useState({
@@ -24,9 +25,13 @@ import { listLogEntries } from "./API";
 import Map from "react-map-gl";
 
 function App() {
+  const [logEntries, setLogEntries] = useState([]);
+
   useEffect(() => {
     (async () => {
       const logEntries = await listLogEntries();
+      //updates the logEntries state so we can use the arraay in the render function
+      setLogEntries(logEntries);
       console.log(logEntries);
     })();
   }, []);
@@ -40,8 +45,17 @@ function App() {
       }}
       style={{ width: "100vw", height: "100vh" }}
       mapStyle="mapbox://styles/mapbox/navigation-night-v1"
-      mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-    />
+      mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}>
+      {logEntries.map((entry) => (
+        <Marker
+          longitude={entry.longitude}
+          latitude={entry.latitude}
+          anchor="bottom">
+          <img src="./pin.png" />
+          <p>{entry.title}</p>
+        </Marker>
+      ))}
+    </Map>
   );
 }
 
